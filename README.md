@@ -13,8 +13,9 @@ When you save a note it will show up under the note tutle on the left sidebar. I
 
 ## Visuals
 
-[Note Taker]()
+[Note Taker](https://www.awesomescreenshot.com/video/9600503?key=fd5db1898aec66039b9b3ec70650ea1a)
 
 ## Resources
 
+- [Live Site]()
 - [Repository](https://github.com/grilledcheeseplease/Note-Taker)
