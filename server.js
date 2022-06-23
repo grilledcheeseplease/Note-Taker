@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 // Add data parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Set up routes 
 app.get('public/notes', (req, res) => {
