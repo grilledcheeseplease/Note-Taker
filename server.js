@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Had tutor help
 // Set up routes 
 app.get('public/notes', (req, res) => {
     fs.readFile('db/db.json', 'utf-8', (err, data) => {
