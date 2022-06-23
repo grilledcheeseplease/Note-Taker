@@ -17,5 +17,5 @@ When you save a note it will show up under the note tutle on the left sidebar. I
 
 ## Resources
 
-- [Live Site]()
+- [Live Site](https://limitless-falls-71753.herokuapp.com/)
 - [Repository](https://github.com/grilledcheeseplease/Note-Taker)
