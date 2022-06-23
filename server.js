@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const noteData = require('./db/db.json');
 
 // Set up variable for express() function and port
 const app = express();
@@ -12,24 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// Set up routes 
-app.get('public/notes', (req, res) => {
-    fs.readFile('db/db.json', 'utf-8', (err, data) => {
-        if (err) throw err;
-        const notes = JSON.parse(data);
-    });
-});
-
 // API routes
 app.get('/api/notes', (req, res) => {
-    res.json(notes);
+    res.json(noteData.slice(1));
 });
 
 app.post('/api/notes', (req, res) => {
-    const newNote = req.body;
-    notes.push(newNote);
-    dbTracker();
-    return console.log('Note added ' + newNote.title);
+    const newNote = addNote(req.body, noteData);
+    res.json(addNote);
 });
 
 // When we want to get a note at a specific id
@@ -39,26 +30,46 @@ app.get('/api/notes/:id', (req, res) => {
 
 // Where we are going to delete notes 
 app.delete('/api/notes/:id', (req, res) => {
-    notes.splice(req.params.id, 1);
-    dbTracker();
-    console.log('Note deleted ' + req.params.id);
+    dbTracker(req.params.id, noteData);
+    res.json(true);
 });
 
 // Set up views to display html files 
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
+// Function to add notes 
+const addNote = (body, noteArray) {
+    const newNote = body;
+    if(!Array.isArray(noteArray))
+    noteArray = [];
+
+    if(noteArray.length === 0)
+    noteArray[0]++;
+
+    noteArray.push(newNote);
+    fs.writeFileSync(
+        path.join(__dirname, './db/dbljson'),
+        JSON.stringify(noteArray, null, 2)
+    );
+    return newNote;
+}
+
 // Function to track notes added and deleted 
-const dbTracker = () => {
-    fs.writeFile('db/db.json', JSON.stringify(notes, '\t'), err => {
-        if (err) throw err;
-        return true;
-    });
+const dbTracker = (id, noteArray) => {
+    for(let i = 0; i < notes.length; i++) {
+        if (notes[i].id == id) {
+            notes.splice(i, 1);
+            //short circuit the loop, since there will only be one match on ID
+            break;
+        }
+    }
+
 };
 
 
