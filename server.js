@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
 });
 
 // Function to add notes 
-const addNote = (body, noteArray) {
+const addNote = (body, noteArray) => {
     const newNote = body;
     if(!Array.isArray(noteArray))
     noteArray = [];
